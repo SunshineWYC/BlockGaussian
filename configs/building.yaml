@@ -1,0 +1,53 @@
+# scene params
+scene_dirpath: ./datasets/building/train
+output_dirpath: ./output/time_exps/building_002
+scene_type: colmap  # colmap
+white_background: false
+sh_degree: 3
+evaluate: false
+scene_scale: 1.0
+image_scale: 0.25
+expand_ratio: 0.05
+vertical_axis: "y"
+max_tree_depth: 2
+num_points_thresh: 300000
+cover_ratio_thresh: 0.3
+
+# training params
+num_workers: 8
+batch_size: 1
+preload: "cpu" # "cpu" / "none"
+iterations: 40000
+position_lr_init: 0.00016
+position_lr_final: 0.0000016
+position_lr_delay_mult: 0.01
+position_lr_max_steps: None
+feature_lr: 0.0025
+opacity_lr: 0.025
+scaling_lr: 0.005
+rotation_lr: 0.001
+random_background: false
+lambda_dssim: 0.2
+depth_l1_weight_init: 1.0
+depth_l1_weight_final: 0.1
+reproj_l1_weight_init: 0.01
+reproj_l1_weight_final: 0.5
+depth_inv_loss: true
+pesudo_loss: false
+pesudo_loss_start: 3000
+
+# densify and prune params
+percent_dense: 0.01
+densify_grad_threshold: 0.0002
+densification_interval: 200
+densify_from_iter: 1000
+densify_until_iter: None
+opacity_reset_interval: None
+min_opacity: 0.005
+densify_only_in_block: true
+
+# rendering paramss
+convert_SHs_python: false
+compute_cov3D_python: false
+debug: false
+antialiasing: false

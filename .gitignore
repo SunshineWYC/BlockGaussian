@@ -1,0 +1,5 @@
+datasets
+**/__pycache__
+__pycache__
+.vscode
+preprocess/Depth-Anything-V2/checkpoints
