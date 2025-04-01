@@ -13,7 +13,7 @@ This repo is the official implement of BlockGaussian, a novel framework incorpor
       <td style="padding: 2px;"><img src="./assets/images/BGS_rubble.gif" alt="rubble" style="width:600px"; display: block;></td>
     </tr>
     <tr>
-      <td style="padding: 2px;"><img src="./assets/images/BGS_residence.gif" alt="residence" style="width:600px"; display: block;></td>
+      <td style="padding: 2px;"><img src="./assets/images/BGS_mc_street.gif" alt="residence" style="width:600px"; display: block;></td>
       <td style="padding: 2px;"><img src="./assets/images/BGS_mc_aerial.gif" alt="mc_aerial" style="width:600px"; display: block;></td>
     </tr>
   </table>
