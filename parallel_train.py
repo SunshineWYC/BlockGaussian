@@ -3,14 +3,6 @@ import argparse
 import subprocess
 
 
-num_tasks = 6  # block numbers
-num_gpus = 6   # visible gpu numbers
-base_command = "CUDA_VISIBLE_DEVICES={} python train.py -b {}"
-memory_threshold = 2048  # VRAM threshold
-block_ids = list(range(0, num_tasks))
-gpu_tasks = {gpu_id: None for gpu_id in range(num_gpus)}
-
-
 def get_gpu_memory_usage():
     result = subprocess.run(
         ['nvidia-smi', '--query-gpu=memory.used', '--format=csv,noheader,nounits'],
@@ -59,5 +51,21 @@ def wait_for_all_tasks_to_complete():
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Parallel training script")
+    parser.add_argument("--config", "-c", type=str, default="./configs/rubble.yaml", help="config filepath")
+    parser.add_argument("--num_blocks", type=int, default=1, help="Number of blocks to run")
+    parser.add_argument("--num_gpus", type=int, default=8, help="Number of GPUs available")
+    parser.add_argument("--memory_threshold", type=int, default=2048, help="GPU memory threshold in MB")
+    args = parser.parse_args()
+
+    num_blocks = args.num_blocks
+    num_gpus = args.num_gpus
+    memory_threshold = args.memory_threshold
+    block_ids = list(range(0, num_blocks))
+
+    global gpu_tasks, base_command
+    gpu_tasks = {gpu_id: None for gpu_id in range(num_gpus)}
+    base_command = "CUDA_VISIBLE_DEVICES={} python train.py" + " -c " + args.config + " -b {} "
+
     check_and_launch_tasks()
     wait_for_all_tasks_to_complete()

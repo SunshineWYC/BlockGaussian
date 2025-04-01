@@ -1,7 +1,6 @@
 # scene params
 scene_dirpath: ./datasets/rubble/train
 output_dirpath: ./output/rubble
-scene_type: colmap  # colmap
 white_background: false
 sh_degree: 3
 evaluate: false
@@ -33,8 +32,8 @@ depth_l1_weight_final: 0.1
 reproj_l1_weight_init: 0.01
 reproj_l1_weight_final: 0.5
 depth_inv_loss: true
-pesudo_loss: false
-pesudo_loss_start: 3000
+pesudo_loss: true
+pesudo_loss_start: 5000
 
 # densify and prune params
 percent_dense: 0.01

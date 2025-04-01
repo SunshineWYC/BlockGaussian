@@ -225,6 +225,7 @@ def select_scene_area(pts_2d, cameras_position_2d):
     fig.canvas.mpl_connect('button_press_event', on_click)
     fig.canvas.mpl_connect('key_press_event', on_key)
     plt.axis("equal")
+    plt.axis("off")
     plt.show()
     
     return np.array(polygon_points)[:-1, :]
@@ -351,7 +352,8 @@ def scene_partion(cfg, vertical_axis="z"):
     plt.scatter(cameras_position_2d[:, 0], cameras_position_2d[:, 1], c='red', s=0.5, label='Camera')
     plot_rectangle(bounding_rect, color=[0, 1, 0])
     plt.axis("equal")
-    plt.savefig(os.path.join(cfg.output_dirpath, "scene_ROI_region.png"))
+    plt.axis("off")
+    plt.savefig(os.path.join(cfg.output_dirpath, "ROI_region.png"))
     plt.show()
 
     ################ divide scene_bounding rect to blocks by binary tree #################
@@ -453,7 +455,8 @@ def scene_partion(cfg, vertical_axis="z"):
         json.dump(blocks_info_dict, json_file, indent=4)
 
     plt.axis("equal")
-    plt.savefig(os.path.join(cfg.output_dirpath, "scene_partion_blocks.png"))
+    plt.axis("off")
+    plt.savefig(os.path.join(cfg.output_dirpath, "Partition_Results.png"))
     plt.show()
 
 
