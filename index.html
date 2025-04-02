@@ -220,6 +220,27 @@
 <!-- End paper abstract -->
 
 
+<!-- Challenge figure -->
+<section class="section hero">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full width">
+        <h2 class="title is-3">Challenges</h2>
+        <div class="content">
+          <figure>
+            <img src="./static/images/challenges.png" alt="Challenges" style="width: 100%; max-width: 120%; height: auto; display: block; margin: 0 auto;">
+            <figcaption class="has-text-justified" style="font-family: 'Helvetica', sans-serif; font-size: 1rem; line-height: 1.6; color: #333; text-align: center; font-style: normal; text-indent: 2em;">
+              Our goal is to solve the existing challenges in large-scale scene novel view synthesis task under divide-and-conquer paradigm. a) Imbalanced reconstruction complexity across blocks: The intensity of content in different scene regions exhibits significant differences. Areas with dense content require finer subdivision granularity to ensure reconstruction fidelity, while sparser-content regions benefit from coarser partitioning to enhance computational efficiency. b) Supervision mismatch in block-wise optimization: The content of a training view may be divided into multiple blocks after scene partitioning. Due to visibility constraints, the entire training view image does not match the ideal supervision when optimizing the individual block. c) Quality degradation in fusion results: Floater in airspace is an important reason for the quality degradation of fusion results. Since each block is optimized individually, these floaters fit well in the training perspective but degrade the quality of the synthesized novel views, especially in the boundary region.
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End challenge figure -->
+
+
 <!-- Overview figure -->
 <section class="section hero">
   <div class="container is-max-desktop">
