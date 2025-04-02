@@ -181,11 +181,32 @@
 <!-- End result video carousel -->
 
 
+<!-- Teaser figure -->
+<section class="section hero">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full width">
+        <!-- <h2 class="title is-3">Overview</h2> -->
+        <div class="content">
+          <figure>
+            <img src="./static/images/teaser.png" alt="Teaser" style="width: 100%; max-width: 120%; height: auto; display: block; margin: 0 auto;">
+            <figcaption class="has-text-justified" style="font-family: 'Helvetica', sans-serif; font-size: 1rem; line-height: 1.6; color: #333; text-align: center; font-style: normal; text-indent: 2em;">
+              BlockGaussian reconstructs city-scale scenes from massive multi-view images and enables high-quality novel view synthesis from arbitrary viewpoints, as illustrated in the surrounding images. Compared to existing methods, our approach reduces reconstruction time from hours to minutes while achieving superior rendering quality in most scenes.
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Teaser figure -->
+
+
 <!-- Paper abstract -->
 <section class="section hero">
   <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
-      <div class="column is-full">
+      <div class="column is-full" style="width: 93%;">
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p style="text-indent: 2em;">
@@ -242,6 +263,17 @@
               Quantitative comparison of novel view synthesis results on Mill19 and UrbanScene3D datasets. We present the optimization time OptTime (hh:mm), the number of final points ($10^6$) and the allocated VRAM (GB) during evaluation.
             </figcaption>
           </figure>
+
+          <!-- Third Image -->
+          <figure style="text-align: center;">
+            <img src="./static/images/result_comparison_us3d.png" alt="Description of the second image">
+          </figure>
+
+          <!-- 4th Image -->
+          <figure style="text-align: center;">
+            <img src="./static/images/result_comparison_mc_aerial.png" alt="Description of the second image">
+          </figure>
+
         </div>
       </div>
     </div>
