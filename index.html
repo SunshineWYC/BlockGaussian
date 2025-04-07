@@ -189,7 +189,7 @@
         <!-- <h2 class="title is-3">Overview</h2> -->
         <div class="content">
           <figure>
-            <img src="./static/images/teaser.png" alt="Teaser" style="width: 100%; max-width: 120%; height: auto; display: block; margin: 0 auto;">
+            <img src="./static/images/teaser.jpg" alt="Teaser" style="width: 100%; max-width: 120%; height: auto; display: block; margin: 0 auto;">
             <figcaption class="has-text-justified" style="font-family: 'Helvetica', sans-serif; font-size: 1rem; line-height: 1.6; color: #333; text-align: center; font-style: normal; text-indent: 2em;">
               BlockGaussian reconstructs city-scale scenes from massive multi-view images and enables high-quality novel view synthesis from arbitrary viewpoints, as illustrated in the surrounding images. Compared to existing methods, our approach reduces reconstruction time from hours to minutes while achieving superior rendering quality in most scenes.
             </figcaption>
@@ -228,7 +228,7 @@
         <h2 class="title is-3">Challenges</h2>
         <div class="content">
           <figure>
-            <img src="./static/images/challenges.png" alt="Challenges" style="width: 100%; max-width: 120%; height: auto; display: block; margin: 0 auto;">
+            <img src="./static/images/challenges.jpg" alt="Challenges" style="width: 100%; max-width: 120%; height: auto; display: block; margin: 0 auto;">
             <figcaption class="has-text-justified" style="font-family: 'Helvetica', sans-serif; font-size: 1rem; line-height: 1.6; color: #333; text-align: center; font-style: normal; text-indent: 2em;">
               Our goal is to solve the existing challenges in large-scale scene novel view synthesis task under divide-and-conquer paradigm. a) Imbalanced reconstruction complexity across blocks: The intensity of content in different scene regions exhibits significant differences. Areas with dense content require finer subdivision granularity to ensure reconstruction fidelity, while sparser-content regions benefit from coarser partitioning to enhance computational efficiency. b) Supervision mismatch in block-wise optimization: The content of a training view may be divided into multiple blocks after scene partitioning. Due to visibility constraints, the entire training view image does not match the ideal supervision when optimizing the individual block. c) Quality degradation in fusion results: Floater in airspace is an important reason for the quality degradation of fusion results. Since each block is optimized individually, these floaters fit well in the training perspective but degrade the quality of the synthesized novel views, especially in the boundary region.
             </figcaption>
@@ -249,7 +249,7 @@
         <h2 class="title is-3">Overview</h2>
         <div class="content">
           <figure>
-            <img src="./static/images/overview.png" alt="Method overview" style="width: 100%; max-width: 120%; height: auto; display: block; margin: 0 auto;">
+            <img src="./static/images/overview.jpg" alt="Method overview" style="width: 100%; max-width: 120%; height: auto; display: block; margin: 0 auto;">
             <figcaption class="has-text-justified" style="font-family: 'Helvetica', sans-serif; font-size: 1rem; line-height: 1.6; color: #333; text-align: center; font-style: normal; text-indent: 2em;">
               Overview of our proposed method. We first divide the entire scene and allocates viewpoints with Content-Aware Scene Partition, which jointly considering the complexity of scene content and the computational load distribution across blocks. Subsequently, we optimize each block independently, which is executable either sequentially on a single GPU or in parallel across multiple GPUs. During block optimization, we introduce auxiliary point clouds (aux pts) to address supervision mismatch issues. Pseudo-View Geometry Constraint is conducted to supervise airspace regions and mitigate floater artifacts. Finally, the optimized results from all blocks are integrated to construct a comprehensive Gaussian Representation of the entire scene, enabling interactive novel view synthesis.
             </figcaption>
@@ -271,7 +271,7 @@
         <div class="content">
           <!-- First Image -->
           <figure>
-            <img src="./static/images/U3D_quality.png" alt="Quality comparison with other methods on U3D and Mill19 datasets" style="width: 100%; max-width: 120%; height: auto; display: block; margin: 0 auto;">
+            <img src="./static/images/U3D_quality.jpg" alt="Quality comparison with other methods on U3D and Mill19 datasets" style="width: 100%; max-width: 120%; height: auto; display: block; margin: 0 auto;">
             <figcaption class="has-text-justified" style="font-family: 'Helvetica', sans-serif; font-size: 1rem; line-height: 1.6; color: #333; text-align: center; font-style: normal; text-indent: 2em;">
               Quantitative comparison of novel view synthesis results on Mill19 and UrbanScene3D datasets. The best, the second best, and the third best results are highlighted in red, orange and yellow.
             </figcaption>
@@ -279,7 +279,7 @@
           
           <!-- Second Image -->
           <figure style="text-align: center;">
-            <img src="./static/images/U3D_efficiency.png" alt="Description of the second image">
+            <img src="./static/images/U3D_efficiency.jpg" alt="Description of the second image">
             <figcaption class="has-text-justified" style="font-family: 'Helvetica', sans-serif; font-size: 1rem; line-height: 1.6; color: #333; text-align: center; font-style: normal; text-indent: 2em;">
               Quantitative comparison of novel view synthesis results on Mill19 and UrbanScene3D datasets. We present the optimization time OptTime (hh:mm), the number of final points ($10^6$) and the allocated VRAM (GB) during evaluation.
             </figcaption>
@@ -287,12 +287,12 @@
 
           <!-- Third Image -->
           <figure style="text-align: center;">
-            <img src="./static/images/result_comparison_us3d.png" alt="Description of the second image">
+            <img src="./static/images/result_comparison_us3d.jpg" alt="Description of the second image">
           </figure>
 
           <!-- 4th Image -->
           <figure style="text-align: center;">
-            <img src="./static/images/result_comparison_mc_aerial.png" alt="Description of the second image">
+            <img src="./static/images/result_comparison_mc_aerial.jpg" alt="Description of the second image">
           </figure>
 
         </div>
