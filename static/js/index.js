@@ -17,5 +17,19 @@ $(document).ready(function() {
     var carousels = bulmaCarousel.attach('.carousel', options);
 	
     bulmaSlider.attach();
-
 })
+
+
+document.addEventListener("DOMContentLoaded", (event) => {
+    var b = document.querySelectorAll('.b-dics');
+    b.forEach(element =>
+        new Dics({
+            container: element,
+            textPosition: 'bottom',
+            arrayBackgroundColorText: ['#000000', '#000000', '#000000'],
+            arrayColorText: ['#FFFFFF', '#FFFFFF', '#FFFFFF'],
+            linesColor: '#ffffff'
+        })
+    );
+
+});

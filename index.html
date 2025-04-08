@@ -35,6 +35,7 @@
   <link rel="stylesheet"
   href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="static/css/index.css">
+  <link rel="stylesheet" href="static/css/dics.css">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
@@ -43,6 +44,7 @@
   <script src="static/js/bulma-slider.min.js"></script>
   <script src="static/js/index.js"></script>
   <script src="./static/js/video_comparison.js"></script>
+  <script src="./static/js/dics.js"></script>
 
   <script type="text/javascript" async
   src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
@@ -340,7 +342,74 @@
   </div>
 </section> -->
 <!-- End image carousel -->
- 
+
+
+<!-- Image comparison -->
+<!-- <section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Rendering Comparison</h2>
+      <div class="b-dics" id="rendering_dics">
+        <img src="static/images/comparison/3DGS.png" id="img_render_gs">
+        <img src="static/images/comparison/BGS.png" id="img_render_ours">
+      </div>
+  </div>
+</section> -->
+<!-- End image comparison -->
+
+
+<!-- Image comparison carousel-->
+<section class="section">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Rendering Comparison</h2>
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item">
+          <div class="b-dics" id="rendering_dics">
+            <img src="static/images/comparison/building_3DGS.jpg" id="img_render_gs">
+            <img src="static/images/comparison/building_BGS.jpg" id="img_render_ours">
+          </div>
+          <h2 class="subtitle has-text-centered">
+            Scene Building: left is 3DGS, right is BlockGaussian(ours)
+          </h2>
+        </div>
+
+        <div class="item">
+          <div class="b-dics" id="rendering_dics">
+            <img src="static/images/comparison/residence_DOGS.jpg" id="img_render_gs">
+            <img src="static/images/comparison/residence_BGS.jpg" id="img_render_ours">
+          </div>
+          <h2 class="subtitle has-text-centered">
+            Scene Residence: left is DOGS, right is BlockGaussian(ours)
+          </h2>
+        </div>
+
+        <div class="item">
+          <div class="b-dics" id="rendering_dics">
+            <img src="static/images/comparison/MC-aerial_CGS.jpg" id="img_render_gs">
+            <img src="static/images/comparison/MC-aerial_BGS.jpg" id="img_render_ours">
+          </div>
+          <h2 class="subtitle has-text-centered">
+            Scene MC-Aerial: left is CityGaussian, right is BlockGaussian(ours)
+          </h2>
+        </div>
+
+        <div class="item">
+          <div class="b-dics" id="rendering_dics">
+            <img src="static/images/comparison/rubble_vast.jpg" id="img_render_gs">
+            <img src="static/images/comparison/rubble_BGS.jpg" id="img_render_ours">
+          </div>
+          <h2 class="subtitle has-text-centered">
+            Scene Rubble: left is VastGaussian, right is BlockGaussian(ours)
+          </h2>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End image comparison carousel-->
+
+
 
 <!-- Video comparison carousel-->
 <section class="hero is-small">
@@ -405,7 +474,7 @@
 </footer>
 
 
-<script>
+<!-- <script>
   document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.video-compare-container').forEach(function (container, index) {
       console.log("Index of the container:", index);
@@ -420,7 +489,7 @@
       });
     });
   });
-</script>
+</script> -->
   
 <!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
 
