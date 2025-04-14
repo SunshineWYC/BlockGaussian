@@ -1,4 +1,14 @@
-# BlockGaussian: Efficient Large-Scale Scene Novel View Synthesis via Adaptive Block-Based Gaussian Splatting
+<br>
+<p align="center">
+<h1 align="center"><strong>BlockGaussian: Efficient Large-Scale Scene Novel View Synthesis via Adaptive Block-Based Gaussian Splatting</strong></h1>
+  <p align="center">
+    <em>BeiHang University</em>
+  </p>
+</p>
+
+<div id="top" align="center">
+
+### [Project Page](https://sunshinewyc.github.io/BlockGaussian/) | [Paper]()
 
 ## Introduction
 This repository is the official implement of BlockGaussian, a novel framework incorporating a content-aware scene partition strategy and visibility-aware block optimization to achieve efficient and high-quality large-scale scene reconstruction. BlockGaussian reconstructs city-scale scenes from massive multi-view images and enables high-quality novel view synthesis from arbitrary viewpoints, as illustrated in the surrounding images. Compared to existing methods, our approach reduces reconstruction time from hours to minutes while achieving superior rendering quality in most scenes.
