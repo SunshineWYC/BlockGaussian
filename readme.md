@@ -256,3 +256,10 @@ python metrics.py -o ./output/scene_name --train_eval_split --eval_only
 &emsp;**--train_eval_split** : flag refers to train and eval views are stored separately
 
 &emsp;**--eval_only** : flag to evaluate eval views only
+
+
+## Citation
+If you find this code useful for your research, please use the following BibTeX entry.
+```
+
+```
