@@ -1,12 +1,4 @@
-<br>
-<p align="center">
-<h1 align="center"><strong>BlockGaussian: Efficient Large-Scale Scene Novel View Synthesis via Adaptive Block-Based Gaussian Splatting</strong></h1>
-  <p align="center">
-    <em>BeiHang University</em>
-  </p>
-</p>
-
-<div id="top" align="center">
+# BlockGaussian: Efficient Large-Scale Scene Novel View Synthesis via Adaptive Block-Based Gaussian Splatting
 
 ### [Project Page](https://sunshinewyc.github.io/BlockGaussian/) | [Paper]()
 
