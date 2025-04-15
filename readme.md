@@ -261,5 +261,13 @@ python metrics.py -o ./output/scene_name --train_eval_split --eval_only
 ## Citation
 If you find this code useful for your research, please use the following BibTeX entry.
 ```
-
+@misc{wu2025blockgaussianefficientlargescalescene,
+      title={BlockGaussian: Efficient Large-Scale Scene Novel View Synthesis via Adaptive Block-Based Gaussian Splatting}, 
+      author={Yongchang Wu and Zipeng Qi and Zhenwei Shi and Zhengxia Zou},
+      year={2025},
+      eprint={2504.09048},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2504.09048}, 
+}
 ```
