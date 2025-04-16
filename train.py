@@ -115,9 +115,6 @@ def reconstruct(cfg, block_id, block_bbx_expand, views_info_list, init_pcd, eval
                 reprojected_depth, reprojected_image = src2ref(camera_render.intrinsic, camera_render.extrinsic, depth_rendered,
                                                             dummy_camera.intrinsic, dummy_camera.extrinsic, dummy_depth_rendered, dummy_rendered)
                 loss_reproj_photo = loss_reproj(reprojected_depth, reprojected_image, image_gt)
-                # TODO: nan may occur in loss calculation
-                # if np.isnan(loss_reproj_photo.item()):
-                #     print("nan")
                 loss += reproj_l1_weight(iteration) * loss_reproj_photo
             loss.backward()
 
