@@ -3,3 +3,4 @@ datasets
 __pycache__
 .vscode
 preprocess/Depth-Anything-V2/checkpoints
+output

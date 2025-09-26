@@ -209,7 +209,7 @@ python train.py -c ./configs/scene_name.yaml
 * Training on multi-GPU platform
 
 ```shell
-python parallel_train.py -c scene_name.yaml --num_blocks 7 --num_gpus 4
+python parallel_train.py -c ./configs/scene_name.yaml --num_blocks 7 --num_gpus 4
 ```
 &emsp;**--config / -c** : config file path
 
@@ -257,6 +257,7 @@ python metrics.py -o ./output/scene_name --train_eval_split --eval_only
 
 &emsp;**--eval_only** : flag to evaluate eval views only
 
+The optimized 3D Gaussian Splatting results for scenes reported in paper are ready. You can download them from our [BaiduDrive](https://pan.baidu.com/s/1rwxUyQLVqofarSQy9axXzg?pwd=36wa).
 
 ## Citation
 If you find this code useful for your research, please use the following BibTeX entry.
