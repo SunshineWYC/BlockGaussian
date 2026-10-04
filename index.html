@@ -1,499 +1,203 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <!-- Meta tags for social media banners, these should be filled in appropriatly as they are your "business card" -->
-  <!-- Replace the content tag with appropriate information -->
-  <meta name="description" content="DESCRIPTION META TAG">
-  <meta property="og:title" content="SOCIAL MEDIA TITLE TAG"/>
-  <meta property="og:description" content="SOCIAL MEDIA DESCRIPTION TAG TAG"/>
-  <meta property="og:url" content="URL OF THE WEBSITE"/>
-  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X630-->
-  <meta property="og:image" content="static/image/your_banner_image.png" />
-  <meta property="og:image:width" content="1200"/>
-  <meta property="og:image:height" content="630"/>
-
-
-  <meta name="twitter:title" content="TWITTER BANNER TITLE META TAG">
-  <meta name="twitter:description" content="TWITTER BANNER DESCRIPTION META TAG">
-  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X600-->
-  <meta name="twitter:image" content="static/images/your_twitter_banner_image.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <!-- Keywords for your paper to be indexed by-->
-  <meta name="keywords" content="KEYWORDS SHOULD BE PLACED HERE">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <title>BlockGaussian: Scalable Novel View Synthesis for Large Scale Scenes Based on Gaussian Splatting</title>
-  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
-  rel="stylesheet">
-
-  <link rel="stylesheet" href="static/css/bulma.min.css">
-  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
-  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
-  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
-  <link rel="stylesheet"
-  href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-  <link rel="stylesheet" href="static/css/index.css">
+  <title>BlockGaussian: Efficient Large-Scale Scene Novel View Synthesis via Adaptive Block-Based Gaussian Splatting</title>
+  <meta name="description" content="BlockGaussian enables efficient large-scale novel view synthesis through content-aware partitioning, visibility-aware block optimization and pseudo-view geometry regularization.">
+  <meta name="keywords" content="BlockGaussian, 3D Gaussian Splatting, large-scale scene reconstruction, novel view synthesis">
+  <link rel="canonical" href="https://sunshinewyc.github.io/BlockGaussian/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="BlockGaussian: Efficient Large-Scale Scene Novel View Synthesis via Adaptive Block-Based Gaussian Splatting">
+  <meta property="og:description" content="Balance reconstruction workloads. Reduce redundant optimization. Preserve rendering quality.">
+  <meta property="og:url" content="https://sunshinewyc.github.io/BlockGaussian/">
+  <meta property="og:image" content="https://sunshinewyc.github.io/BlockGaussian/static/images/updated/social-preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="BlockGaussian: Efficient Large-Scale Scene Novel View Synthesis via Adaptive Block-Based Gaussian Splatting">
+  <meta name="twitter:description" content="Efficient block-wise reconstruction for large-scale scenes, from aerial imagery to street views.">
+  <meta name="twitter:image" content="https://sunshinewyc.github.io/BlockGaussian/static/images/updated/social-preview.png">
+  <link rel="icon" type="image/svg+xml" href="static/images/favicon.svg">
   <link rel="stylesheet" href="static/css/dics.css">
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
-  <script defer src="static/js/fontawesome.all.min.js"></script>
-  <script src="static/js/bulma-carousel.min.js"></script>
-  <script src="static/js/bulma-slider.min.js"></script>
-  <script src="static/js/index.js"></script>
-  <script src="./static/js/video_comparison.js"></script>
-  <script src="./static/js/dics.js"></script>
-
-  <script type="text/javascript" async
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
-</script>
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
-  });
-  </script>
-  
+  <link rel="stylesheet" href="static/css/index.css">
+  <script src="static/js/dics.js" defer></script>
+  <script src="static/js/index.js" defer></script>
+  <script src="static/js/video_comparison.js" defer></script>
 </head>
+<body id="top">
+<a class="skip-link" href="#main">Skip to content</a>
+<nav class="site-nav" aria-label="Page sections">
+  <div class="nav-inner">
+    <a class="wordmark" href="#top"><img src="static/images/favicon.svg" width="25" height="25" alt="">BlockGaussian</a>
+    <div class="nav-links"><a href="#method">Method</a><a href="#results">Results</a><a href="#efficiency">Efficiency</a><a href="#demos">Demos</a><a href="#citation">Citation</a></div>
+  </div>
+</nav>
+<main id="main">
+  <header class="hero container">
+    <p class="eyebrow">Large-scale scene reconstruction · 3D Gaussian Splatting</p>
+    <h1 class="paper-title">BlockGaussian: Efficient <span class="title-term">Large-Scale</span> Scene Novel View Synthesis<br class="desktop-break"> via Adaptive <span class="title-term">Block-Based</span> Gaussian Splatting</h1>
+    <p class="authors"><span>Yongchang Wu</span><span>Zipeng Qi</span><a href="https://levir.buaa.edu.cn/" target="_blank" rel="noopener">Zhenwei Shi</a><a href="https://zhengxiazou.github.io/" target="_blank" rel="noopener">Zhengxia Zou<sup>*</sup></a></p>
+    <p class="affiliation">Beihang University</p>
+    <p class="corresponding">* Corresponding author</p>
+    <div class="resource-links">
+      <a class="button button-dark" href="https://arxiv.org/pdf/2504.09048" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6zM14 3v5h4M9 12h6M9 16h6"/></svg>Paper</a>
+      <a class="button button-dark" href="https://github.com/SunshineWYC/BlockGaussian" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 7-5 5 5 5m8-10 5 5-5 5m-3-13-2 20"/></svg>Code</a>
+      <a class="button button-dark" href="https://arxiv.org/abs/2504.09048" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 4 14 16M19 4l-6 7M5 20l6-7"/></svg>arXiv</a>
+    </div>
+    <figure class="paper-figure hero-figure"><img src="static/images/updated/teaser-scene.webp" width="3200" height="893" alt="A reconstructed city with novel views from multiple camera positions" fetchpriority="high"></figure>
+    <p class="hero-statement">Large-scale novel view synthesis with limited computing resources. Balanced blocks, focused optimization, and consistent fusion.</p>
+    <div class="highlights">
+      <div><strong>Single-GPU training</strong><p>Train blocks sequentially on a consumer GPU, or in parallel across multiple GPUs.</p></div>
+      <div><strong>3.8–6.6× faster</strong><p>Reconstruction vs. VastGaussian across six scenes on <b>8× RTX 5090</b>. <a href="#efficiency">Table III →</a></p></div>
+      <div><strong>73.0–79.8% retained</strong><p>Optimized Gaussians retained after boundary pruning across four scenes. Table V.</p></div>
+    </div>
+  </header>
 
-<body>
-<section class="hero">
-  <div class="hero-body">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered">
-        <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">BlockGaussian: Efficient Large-Scale Scene Novel View Synthesis via Adaptive Block-Based Gaussian Splatting</h1>
-          <div class="is-size-5 publication-authors">
-              <!-- Paper authors -->
-              <span class="author-block">
-                <a href="FIRST AUTHOR PERSONAL LINK" target="_blank">Yongchang Wu</a>,
-                <a href="SECOND AUTHOR PERSONAL LINK" target="_blank">Zipeng Qi</a>,
-                <a href="https://levir.buaa.edu.cn/" target="_blank">Zhenwei Shi</a>,
-                <a href="https://zhengxiazou.github.io" target="_blank">Zhengxia Zou</a><sup>*</sup></span>
-                </div>
+  <section id="abstract" class="section container">
+    <h2>Abstract</h2>
+    <p>Recent advances in 3D Gaussian Splatting have demonstrated remarkable potential in novel view synthesis. While the divide-and-conquer paradigm has enabled large-scale scene reconstruction, challenges remain in scene partitioning, optimization, and merging under GPU memory constraints. We introduce BlockGaussian, a framework for large-scale novel view synthesis that enables efficient scene reconstruction on a single consumer-grade GPU. Specifically, we propose a content-aware scene partitioning strategy that considers scene content distribution and computational load to balance reconstruction workloads across blocks and improve computational efficiency. Furthermore, a visibility-aware block optimization strategy alleviates the mismatch between block-local representations and image supervision, thereby reducing redundant computation. To preserve rendering quality after block fusion, a pseudo-view geometry constraint suppresses free-space floaters through local reprojection regularization without requiring additional captured views. Extensive experiments demonstrate that our approach substantially reduces reconstruction time while achieving rendering quality competitive with state-of-the-art methods. By decomposing large-scale reconstruction into localized block-wise subproblems, our framework reduces the per-block optimization burden and enables efficient parallel reconstruction across multiple GPUs.</p>
+  </section>
 
-                  <div class="is-size-5 publication-authors">
-                    <span class="author-block">Beihang University (BUAA)</span>
-                    <!-- <span class="author-block">Beihang University (BUAA) <br>Conferance name and year</span> -->
-                    <!-- <span class="eql-cntrb"><small><br><sup>*</sup>Indicates Equal Contribution</small></span> -->
-                  </div>
+  <section id="method" class="section container">
+    <div class="section-heading"><h2>Balanced blocks. Efficient reconstruction.</h2><p>Splitting a scene is only the beginning. Efficient reconstruction also needs balanced workloads, appropriate supervision, and reliable geometry at fusion.</p></div>
+    <div class="three-column challenges">
+      <article><span class="step-number">01</span><h3>Uneven workloads</h3><p>Uniform spatial grids can assign very different reconstruction loads to each block. Parallel training then waits for the slowest block.</p></article>
+      <article><span class="step-number">02</span><h3>Incomplete scene context</h3><p>A block covers only part of a training image. Fitting the entire image with block-local Gaussians encourages redundant out-of-block growth.</p></article>
+      <article><span class="step-number">03</span><h3>Unstable free space</h3><p>Floaters may fit training views but become visible from novel viewpoints after independently trained blocks are merged.</p></article>
+    </div>
+    <figure class="paper-figure overview-figure"><img src="static/images/updated/overview.png" width="3200" height="1135" alt="BlockGaussian pipeline: content-aware partitioning, visibility-aware optimization and scene fusion" loading="lazy" decoding="async"></figure>
+    <div class="three-column method-steps">
+      <article><h3><span>01</span> Partition by content</h3><p>Use sparse SfM points as a proxy for scene complexity. Recursively split dense regions and assign views through visibility, without a global coarse-Gaussian optimization stage.</p></article>
+      <article><h3><span>02</span> Optimize useful content</h3><p>Auxiliary Gaussians represent visible out-of-block regions. Only block Gaussians are densified; auxiliary Gaussians remain compact and are removed before merging.</p></article>
+      <article><h3><span>03</span> Regularize free space</h3><p>Perturb existing training views and warp the rendered pseudo views back to their reference views. Local reprojection consistency discourages unstable free-space Gaussians.</p></article>
+    </div>
+    <details class="disclosure"><summary>Explore content-aware partitioning</summary><div class="details-body">
+      <p>The partition adapts to the distribution of sparse scene content. Building, Rubble, Residence, and MatrixCity-Street each use 8 blocks; Sci-Art uses 4 and MatrixCity-Aerial uses 16. SfM point quality remains important for estimating reconstruction complexity.</p>
+      <figure class="paper-figure "><a href="static/images/updated/partition_result.png" data-lightbox aria-label="Enlarge: Content-adaptive partitions for Building, Rubble, Sci-Art, Residence, MatrixCity-Street and MatrixCity-Aerial"><img src="static/images/updated/partition_result-small.png" width="3200" height="1542" alt="Content-adaptive partitions for Building, Rubble, Sci-Art, Residence, MatrixCity-Street and MatrixCity-Aerial" loading="lazy" decoding="async"></a><figcaption>Partition layouts across aerial and street scenes.</figcaption></figure>
+    </div></details>
+    <details class="disclosure"><summary>How pseudo-view regularization works</summary><div class="details-body detail-split">
+      <div class="pseudo-view-copy"><p>A small camera-pose perturbation creates a local pseudo view from an existing training view. Its rendered depth reprojects the image back to the reference view, where consistency with the ground truth constrains unstable free-space Gaussians without requiring additional captured views.</p></div>
+      <figure class="paper-figure "><a href="static/images/updated/pseudo_loss.png" data-lightbox aria-label="Enlarge: Local camera perturbation and depth-based reprojection for the pseudo-view geometry constraint"><img src="static/images/updated/pseudo_loss-small.png" width="2485" height="3200" alt="Local camera perturbation and depth-based reprojection for the pseudo-view geometry constraint" loading="lazy" decoding="async"></a><figcaption>Pseudo-view geometry constraint.</figcaption></figure>
+    </div></details>
+  </section>
 
-                  <div class="column has-text-centered">
-                    <div class="publication-links">
-                         <!-- Arxiv PDF link -->
-                      <span class="link-block">
-                        <a href="https://arxiv.org/pdf/2504.09048.pdf" target="_blank"
-                        class="external-link button is-normal is-rounded is-dark">
-                        <span class="icon">
-                          <i class="fas fa-file-pdf"></i>
-                        </span>
-                        <span>Paper</span>
-                      </a>
-                    </span>
+  <section id="results" class="section container">
+    <div class="section-heading"><p class="eyebrow">Rendering quality</p><h2>From aerial scenes to street views.</h2><p>Evaluate quality alongside speed. BlockGaussian preserves detailed urban structure while achieving competitive results across real aerial datasets and synthetic city scenes.</p></div>
+    <figure class="paper-figure paper-screenshot "><a href="static/images/updated/table-i.png" data-lightbox aria-label="View full-resolution Table I: rendering quality on Mill19 and UrbanScene3D"><img src="static/images/updated/table-i-small.png" width="1103" height="412" alt="Table I: rendering quality on Mill19 and UrbanScene3D" loading="lazy" decoding="async"></a></figure>
+    <div class="tab-group qualitative-tabs" data-tabs>
+      <div class="scene-tabs" role="tablist" aria-label="Qualitative results">
+        <button id="qual-tab-aerial" role="tab" aria-selected="true" aria-controls="qual-aerial" type="button">Mill19 / UrbanScene3D</button>
+        <button id="qual-tab-city" role="tab" aria-selected="false" aria-controls="qual-city" tabindex="-1" type="button">MatrixCity · Aerial</button>
+        <button id="qual-tab-street" role="tab" aria-selected="false" aria-controls="qual-street" tabindex="-1" type="button">MatrixCity · Street</button>
+      </div>
+      <div id="qual-aerial" role="tabpanel" aria-labelledby="qual-tab-aerial">
+        <figure class="paper-figure "><a href="static/images/updated/result_comparison_us3d.webp" data-lightbox aria-label="Enlarge: Qualitative comparison across Mill19 and UrbanScene3D against Mega-NeRF, 3DGS, CityGaussian and DOGS"><img src="static/images/updated/result_comparison_us3d-small.webp" width="3200" height="1635" alt="Qualitative comparison across Mill19 and UrbanScene3D against Mega-NeRF, 3DGS, CityGaussian and DOGS" loading="lazy" decoding="async"></a><figcaption><strong>Real aerial scenes.</strong> Detailed crops show structural boundaries, vegetation and facade detail.</figcaption></figure>
+      </div>
+      <div id="qual-city" role="tabpanel" aria-labelledby="qual-tab-city" hidden>
+        <figure class="paper-figure "><a href="static/images/updated/result_comparison_mc_aerial.webp" data-lightbox aria-label="Enlarge: MatrixCity-Aerial results compared with 3DGS, CityGaussian, DOGS and ground truth"><img src="static/images/updated/result_comparison_mc_aerial-small.webp" width="3200" height="1194" alt="MatrixCity-Aerial results compared with 3DGS, CityGaussian, DOGS and ground truth" loading="lazy" decoding="async"></a><figcaption><strong>MatrixCity-Aerial.</strong> Repetitive facade textures and high-frequency structures remain more consistent in the highlighted regions.</figcaption></figure>
+      </div>
+      <div id="qual-street" role="tabpanel" aria-labelledby="qual-tab-street" hidden>
+        <figure class="paper-figure "><a href="static/images/updated/result_mc_street.webp" data-lightbox aria-label="Enlarge: Ground-truth street views above corresponding BlockGaussian renderings"><img src="static/images/updated/result_mc_street-small.webp" width="3200" height="1242" alt="Ground-truth street views above corresponding BlockGaussian renderings" loading="lazy" decoding="async"></a><figcaption><strong>Generalization to street views.</strong> Facades and road markings are reconstructed without scene-specific tuning. Ground truth is shown above our renderings.</figcaption></figure>
+      </div>
+    </div>
+  </section>
 
-                    <!-- Supplementary PDF link -->
-                    <!-- <span class="link-block">
-                      <a href="static/pdfs/supplementary_material.pdf" target="_blank"
-                      class="external-link button is-normal is-rounded is-dark">
-                      <span class="icon">
-                        <i class="fas fa-file-pdf"></i>
-                      </span>
-                      <span>Supplementary</span>
-                    </a>
-                  </span> -->
+  <section id="efficiency" class="section section-tint">
+    <div class="container">
+      <div class="section-heading"><p class="eyebrow">Efficiency</p><h2>Less redundant work. Faster reconstruction.</h2><p>BlockGaussian combines lightweight partitioning, localized optimization, and balanced block workloads. The gain is visible in both reconstruction time and the proportion of optimized Gaussians that survive merging.</p></div>
+      <figure class="paper-figure paper-screenshot "><a href="static/images/updated/table-iii.png" data-lightbox aria-label="View full-resolution Table III: reconstruction time, Gaussian count and model storage across six scenes"><img src="static/images/updated/table-iii-small.png" width="1096" height="303" alt="Table III: reconstruction time, Gaussian count and model storage across six scenes" loading="lazy" decoding="async"></a></figure>
+      <p class="table-note">Across six scenes, reconstruction is 3.8–6.6× faster than VastGaussian on the shared 8-GPU platform. Speedups use the times in Table III.</p>
+      <div class="subsection" id="load-balance">
+        <h3>Balanced workloads across blocks.</h3>
+        <figure class="paper-figure paper-screenshot "><a href="static/images/updated/figure-8.png" data-lightbox aria-label="View full-resolution per-block optimization time for four scenes"><img src="static/images/updated/figure-8-small.png" width="1117" height="721" alt="Per-block optimization time for four scenes" loading="lazy" decoding="async"></a></figure>
+      </div>
+      <div class="subsection" id="auxiliary-training">
+        <h3>Training behavior of block and auxiliary Gaussians.</h3>
+        <p class="measure">Auxiliary Gaussians show larger fluctuations in position and log-scale gradients, while block Gaussians become more stable during training. This supports treating out-of-block context separately from the block representation.</p>
+        <figure class="paper-figure paper-screenshot "><a href="static/images/updated/training-gradients.png" data-lightbox aria-label="View full-resolution position and log-scale gradient norms during training"><img src="static/images/updated/training-gradients-small.png" width="538" height="162" alt="Position and log-scale gradient norms during training" loading="lazy" decoding="async"></a><figcaption>Gradient behavior for one block in MatrixCity-Aerial. Blue: block Gaussians; orange: auxiliary Gaussians.</figcaption></figure>
+      </div>
+      <div class="subsection" id="ablation">
+        <h3>Complementary components, measured step by step.</h3>
+        <p class="measure">The Rubble ablation follows the adopted configuration sequence. Auxiliary context improves efficiency, while the scheduled pseudo-view loss trades some computation for better rendering quality and fewer free-space artifacts.</p>
+        <figure class="paper-figure paper-screenshot "><a href="static/images/updated/table-vi.png" data-lightbox aria-label="View full-resolution Table VI: complete algorithm-component ablation on Rubble"><img src="static/images/updated/table-vi-small.png" width="1106" height="557" alt="Table VI: complete algorithm-component ablation on Rubble" loading="lazy" decoding="async"></a></figure>
+      </div>
+      <div id="protocol" class="protocol"><strong>Comparison protocol</strong><p>Runtime measurements use <b>8× NVIDIA RTX 5090</b> GPUs. Reproduced Gaussian methods are trained for 40,000 iterations. Mill19 and UrbanScene3D images use 4× downsampling; reproduced DOGS also uses 4× rather than its original 6× setting. VastGaussian uses an unofficial implementation; CityGaussian, CityGaussianV2 and DOGS use official codebases. Scenes are re-partitioned for the efficiency comparison. Our default batch size is 1.</p></div>
+    </div>
+  </section>
 
-                  <!-- Github link -->
-                  <span class="link-block">
-                    <a href="https://github.com/SunshineWYC/BlockGaussian" target="_blank"
-                    class="external-link button is-normal is-rounded is-dark">
-                    <span class="icon">
-                      <i class="fab fa-github"></i>
-                    </span>
-                    <span>Code</span>
-                  </a>
-                </span>
 
-                <!-- ArXiv abstract Link -->
-                <span class="link-block">
-                  <a href="https://arxiv.org/abs/2504.09048" target="_blank"
-                  class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                    <i class="ai ai-arxiv"></i>
-                  </span>
-                  <span>arXiv</span>
-                </a>
-              </span>
+  <section id="demos" class="section section-tint">
+    <div class="container">
+      <div class="section-heading"><p class="eyebrow">Explore the reconstructions</p><h2>See the scene. Inspect the details.</h2></div>
+      <div class="demo-block">
+        <div class="scene-tabs" role="group" aria-label="Rendering video scene">
+          <button type="button" data-render-scene="Building" aria-pressed="true">Building</button><button type="button" data-render-scene="Rubble" aria-pressed="false">Rubble</button><button type="button" data-render-scene="Residence" aria-pressed="false">Residence</button><button type="button" data-render-scene="MatrixCity-Aerial" aria-pressed="false">MatrixCity · Aerial</button><button type="button" data-render-scene="MatrixCity-Street" aria-pressed="false">MatrixCity · Street</button>
+        </div>
+        <figure class="video-figure">
+          <video id="render-video" controls muted loop playsinline preload="none" poster="static/images/comparison/building_BGS.jpg" src="static/videos/BGS_building_720p.mp4" aria-label="BlockGaussian novel-view rendering of Building"></video>
+          <figcaption id="render-video-caption">Building · BlockGaussian novel-view rendering. Use the player controls to start or pause.</figcaption>
+        </figure>
+        <p id="render-status" class="interaction-status" role="status" aria-live="polite"></p>
+      </div>
+      <div class="demo-block" id="image-comparison">
+        <h3>Interactive image comparison</h3>
+        <div class="scene-tabs" role="group" aria-label="Image comparison scene">
+          <button type="button" data-image-scene="Building" aria-pressed="true">Building</button><button type="button" data-image-scene="Residence" aria-pressed="false">Residence</button><button type="button" data-image-scene="MatrixCity-Aerial" aria-pressed="false">MatrixCity · Aerial</button><button type="button" data-image-scene="Rubble" aria-pressed="false">Rubble</button>
+        </div>
+        <div class="b-dics" id="image-compare">
+          <img src="static/images/comparison/building_3DGS.jpg" alt="3DGS" width="720" height="540">
+          <img src="static/images/comparison/building_BGS.jpg" alt="BlockGaussian" width="720" height="540">
+        </div>
+        <p class="table-note" id="image-comparison-caption">Scene Building: left is 3DGS, right is BlockGaussian. Drag the divider to compare.</p>
+      </div>
+      <div class="demo-block" id="dynamic-comparison">
+        <h3>Dynamic comparison</h3>
+        <div class="tab-group" data-tabs>
+          <div class="scene-tabs" role="tablist" aria-label="Dynamic comparison scene"><button type="button" id="dynamic-tab-rubble" role="tab" aria-selected="true" aria-controls="dynamic-rubble">Rubble</button><button type="button" id="dynamic-tab-residence" role="tab" aria-selected="false" aria-controls="dynamic-residence" tabindex="-1">Residence</button></div>
+          <div id="dynamic-rubble" role="tabpanel" aria-labelledby="dynamic-tab-rubble">
+            <div class="video-comparison" data-video-comparison>
+              <p class="comparison-methods">Left: VastGaussian · Right: BlockGaussian</p>
+              <div class="video-comparison-stage"><video controls muted loop playsinline preload="none" poster="static/images/updated/rubble-video-poster.webp" src="static/videos/rubble_comparison_label.mp4" aria-label="Rubble side-by-side source video"></video><canvas hidden aria-label="Rubble interactive video comparison"></canvas></div>
+              <div class="video-controls"><button class="button button-outline play-comparison" type="button">Play comparison</button></div>
+              <p class="interaction-status" role="status" aria-live="polite"></p>
+            </div>
+          </div>
+          <div id="dynamic-residence" role="tabpanel" aria-labelledby="dynamic-tab-residence" hidden>
+            <div class="video-comparison" data-video-comparison>
+              <p class="comparison-methods">Left: CityGaussian · Right: BlockGaussian</p>
+              <div class="video-comparison-stage"><video controls muted loop playsinline preload="none" poster="static/images/updated/residence-video-poster.webp" src="static/videos/residence_comparison_label.mp4" aria-label="Residence side-by-side source video"></video><canvas hidden aria-label="Residence interactive video comparison"></canvas></div>
+              <div class="video-controls"><button class="button button-outline play-comparison" type="button">Play comparison</button></div>
+              <p class="interaction-status" role="status" aria-live="polite"></p>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
+  <section id="limitations" class="section container">
+    <p class="eyebrow">Scope and limitations</p><h2>What the framework targets.</h2>
+    <p>BlockGaussian targets reconstruction efficiency. Final Gaussian counts, storage, rendering memory, and full-scene rendering latency can still grow with scene scale. Rendering-oriented techniques such as level of detail and compression are complementary directions.</p>
+    <p>Rendering quality does not guarantee geometric accuracy. The framework also relies on reliable scene initialization, so challenging image conditions or incomplete scene estimates can limit reconstruction.</p>
+  </section>
 
-<!-- Result video carousel -->
-<section class="hero is-small">
-  <div class="hero-body">
-    <div class="container is-max-desktop">
-      <!-- <h2 class="title is-3">Another Carousel</h2> -->
-      <div id="results-carousel" class="carousel results-carousel">
-        
-        <div class="item item-video1">
-          <video poster="" id="video1" autoplay controls muted loop style="width: 100%; height: auto;">
-            <source src="static/videos/BGS_building_720p.mp4"
-            type="video/mp4">
-          </video>
-        </div>
-
-        <div class="item item-video2">
-          <video poster="" id="video2" autoplay controls muted loop style="width: 100%; height: auto;">
-            <source src="static/videos/BGS_rubble_720p.mp4"
-            type="video/mp4">
-          </video>
-        </div>
-        
-        <div class="item item-video3">
-          <video poster="" id="video3" autoplay controls muted loop style="width: 100%; height: auto;">
-            <source src="static/videos/BGS_residence_720p.mp4"
-            type="video/mp4">
-          </video>
-        </div>
-
-        <div class="item item-video4">
-          <video poster="" id="video4" autoplay controls muted loop style="width: 100%; height: auto;">
-            <source src="static/videos/BGS_mc_aerial_720p.mp4"
-            type="video/mp4">
-          </video>
-        </div>
-
-        <div class="item item-video5">
-          <video poster="" id="video5" autoplay controls muted loop style="width: 100%; height: auto;">
-            <source src="static/videos/BGS_mc_street_720p.mp4"
-            type="video/mp4">
-          </video>
-        </div>
-
-      </div>
-    </div>
-  </div>
-</section>
-<!-- End result video carousel -->
-
-
-<!-- Teaser figure -->
-<section class="section hero">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-full width">
-        <!-- <h2 class="title is-3">Overview</h2> -->
-        <div class="content">
-          <figure>
-            <img src="./static/images/teaser.jpg" alt="Teaser" style="width: 100%; max-width: 120%; height: auto; display: block; margin: 0 auto;">
-            <figcaption class="has-text-justified" style="font-family: 'Helvetica', sans-serif; font-size: 1rem; line-height: 1.6; color: #333; text-align: center; font-style: normal; text-indent: 2em;">
-              BlockGaussian reconstructs city-scale scenes from massive multi-view images and enables high-quality novel view synthesis from arbitrary viewpoints, as illustrated in the surrounding images. Compared to existing methods, our approach reduces reconstruction time from hours to minutes while achieving superior rendering quality in most scenes.
-            </figcaption>
-          </figure>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- End Teaser figure -->
-
-
-<!-- Paper abstract -->
-<section class="section hero">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-full" style="width: 93%;">
-        <h2 class="title is-3">Abstract</h2>
-        <div class="content has-text-justified">
-          <p style="text-indent: 2em;">
-            The recent advancements in 3D Gaussian Splatting (3DGS) have demonstrated remarkable potential in novel view synthesis tasks. The divide-and-conquer paradigm has enabled large-scale scene reconstruction, but significant challenges remain in scene partitioning, optimization, and merging processes. This paper introduces BlockGaussian, a novel framework incorporating a content-aware scene partition strategy and visibility-aware block optimization to achieve efficient and high-quality large-scale scene reconstruction. Specifically, our approach considers the content-complexity variation across different regions and balances computational load during scene partitioning, enabling efficient scene reconstruction. To tackle the supervision mismatch issue during independent block optimization, we introduce auxiliary points during individual block optimization to align the ground-truth supervision, which enhances the reconstruction quality. Furthermore, we propose a pseudo-view geometry constraint that effectively mitigates rendering degradation caused by airspace floaters during block merging. Extensive experiments on large-scale scenes demonstrate that our approach achieves state-of-the-art results in both reconstruction efficiency and rendering quality.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- End paper abstract -->
-
-
-<!-- Challenge figure -->
-<section class="section hero">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-full width">
-        <h2 class="title is-3">Challenges</h2>
-        <div class="content">
-          <figure>
-            <img src="./static/images/challenges.jpg" alt="Challenges" style="width: 100%; max-width: 120%; height: auto; display: block; margin: 0 auto;">
-            <figcaption class="has-text-justified" style="font-family: 'Helvetica', sans-serif; font-size: 1rem; line-height: 1.6; color: #333; text-align: center; font-style: normal; text-indent: 2em;">
-              Our goal is to solve the existing challenges in large-scale scene novel view synthesis task under divide-and-conquer paradigm. a) Imbalanced reconstruction complexity across blocks: The intensity of content in different scene regions exhibits significant differences. Areas with dense content require finer subdivision granularity to ensure reconstruction fidelity, while sparser-content regions benefit from coarser partitioning to enhance computational efficiency. b) Supervision mismatch in block-wise optimization: The content of a training view may be divided into multiple blocks after scene partitioning. Due to visibility constraints, the entire training view image does not match the ideal supervision when optimizing the individual block. c) Quality degradation in fusion results: Floater in airspace is an important reason for the quality degradation of fusion results. Since each block is optimized individually, these floaters fit well in the training perspective but degrade the quality of the synthesized novel views, especially in the boundary region.
-            </figcaption>
-          </figure>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- End challenge figure -->
-
-
-<!-- Overview figure -->
-<section class="section hero">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-full width">
-        <h2 class="title is-3">Overview</h2>
-        <div class="content">
-          <figure>
-            <img src="./static/images/overview.jpg" alt="Method overview" style="width: 100%; max-width: 120%; height: auto; display: block; margin: 0 auto;">
-            <figcaption class="has-text-justified" style="font-family: 'Helvetica', sans-serif; font-size: 1rem; line-height: 1.6; color: #333; text-align: center; font-style: normal; text-indent: 2em;">
-              Overview of our proposed method. We first divide the entire scene and allocates viewpoints with Content-Aware Scene Partition, which jointly considering the complexity of scene content and the computational load distribution across blocks. Subsequently, we optimize each block independently, which is executable either sequentially on a single GPU or in parallel across multiple GPUs. During block optimization, we introduce auxiliary point clouds (aux pts) to address supervision mismatch issues. Pseudo-View Geometry Constraint is conducted to supervise airspace regions and mitigate floater artifacts. Finally, the optimized results from all blocks are integrated to construct a comprehensive Gaussian Representation of the entire scene, enabling interactive novel view synthesis.
-            </figcaption>
-          </figure>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- End overview figure -->
-
-
-<!-- Comparison Table -->
-<section class="section hero">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-full width">
-        <h2 class="title is-3">Comparison With SOTA</h2>
-        <div class="content">
-          <!-- First Image -->
-          <figure>
-            <img src="./static/images/U3D_quality.jpg" alt="Quality comparison with other methods on U3D and Mill19 datasets" style="width: 100%; max-width: 120%; height: auto; display: block; margin: 0 auto;">
-            <figcaption class="has-text-justified" style="font-family: 'Helvetica', sans-serif; font-size: 1rem; line-height: 1.6; color: #333; text-align: center; font-style: normal; text-indent: 2em;">
-              Quantitative comparison of novel view synthesis results on Mill19 and UrbanScene3D datasets. The best, the second best, and the third best results are highlighted in red, orange and yellow.
-            </figcaption>
-          </figure>
-          
-          <!-- Second Image -->
-          <figure style="text-align: center;">
-            <img src="./static/images/U3D_efficiency.jpg" alt="Description of the second image">
-            <figcaption class="has-text-justified" style="font-family: 'Helvetica', sans-serif; font-size: 1rem; line-height: 1.6; color: #333; text-align: center; font-style: normal; text-indent: 2em;">
-              Quantitative comparison of novel view synthesis results on Mill19 and UrbanScene3D datasets. We present the optimization time OptTime (hh:mm), the number of final points ($10^6$) and the allocated VRAM (GB) during evaluation.
-            </figcaption>
-          </figure>
-
-          <!-- Third Image -->
-          <figure style="text-align: center;">
-            <img src="./static/images/result_comparison_us3d.jpg" alt="Description of the second image">
-          </figure>
-
-          <!-- 4th Image -->
-          <figure style="text-align: center;">
-            <img src="./static/images/result_comparison_mc_aerial.jpg" alt="Description of the second image">
-          </figure>
-
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- End comparison table -->
-
-
-<!-- Image carousel -->
-<!-- <section class="hero is-small">
-  <div class="hero-body">
-    <div class="container is-max-desktop">
-      <div id="results-carousel" class="carousel results-carousel">
-        <div class="item">
-          <img src="static/images/carousel1.jpg" alt="MY ALT TEXT"/>
-          <h2 class="subtitle has-text-centered">
-            First image description.
-          </h2>
-        </div>
-
-        <div class="item">
-          <img src="static/images/carousel2.jpg" alt="MY ALT TEXT"/>
-          <h2 class="subtitle has-text-centered">
-            Second image description.
-          </h2>
-        </div>
-
-        <div class="item">
-          <img src="static/images/carousel3.jpg" alt="MY ALT TEXT"/>
-          <h2 class="subtitle has-text-centered">
-          Third image description.
-          </h2>
-        </div>
-
-        <div class="item">
-          <img src="static/images/carousel4.jpg" alt="MY ALT TEXT"/>
-          <h2 class="subtitle has-text-centered">
-            Fourth image description.
-          </h2>
-        </div>
-      </div>
-    </div>
-  </div>
-</section> -->
-<!-- End image carousel -->
-
-
-<!-- Image comparison -->
-<!-- <section class="section">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3 has-text-centered">Rendering Comparison</h2>
-      <div class="b-dics" id="rendering_dics">
-        <img src="static/images/comparison/3DGS.png" id="img_render_gs">
-        <img src="static/images/comparison/BGS.png" id="img_render_ours">
-      </div>
-  </div>
-</section> -->
-<!-- End image comparison -->
-
-
-<!-- Image comparison carousel-->
-<section class="section">
-  <div class="hero-body">
-    <div class="container is-max-desktop">
-      <h2 class="title is-3 has-text-centered">Rendering Comparison</h2>
-      <div id="results-carousel" class="carousel results-carousel">
-        <div class="item">
-          <div class="b-dics" id="rendering_dics">
-            <img src="static/images/comparison/building_3DGS.jpg" id="img_render_gs">
-            <img src="static/images/comparison/building_BGS.jpg" id="img_render_ours">
-          </div>
-          <h2 class="subtitle has-text-centered">
-            Scene Building: left is 3DGS, right is BlockGaussian(ours)
-          </h2>
-        </div>
-
-        <div class="item">
-          <div class="b-dics" id="rendering_dics">
-            <img src="static/images/comparison/residence_DOGS.jpg" id="img_render_gs">
-            <img src="static/images/comparison/residence_BGS.jpg" id="img_render_ours">
-          </div>
-          <h2 class="subtitle has-text-centered">
-            Scene Residence: left is DOGS, right is BlockGaussian(ours)
-          </h2>
-        </div>
-
-        <div class="item">
-          <div class="b-dics" id="rendering_dics">
-            <img src="static/images/comparison/MC-aerial_CGS.jpg" id="img_render_gs">
-            <img src="static/images/comparison/MC-aerial_BGS.jpg" id="img_render_ours">
-          </div>
-          <h2 class="subtitle has-text-centered">
-            Scene MC-Aerial: left is CityGaussian, right is BlockGaussian(ours)
-          </h2>
-        </div>
-
-        <div class="item">
-          <div class="b-dics" id="rendering_dics">
-            <img src="static/images/comparison/rubble_vast.jpg" id="img_render_gs">
-            <img src="static/images/comparison/rubble_BGS.jpg" id="img_render_ours">
-          </div>
-          <h2 class="subtitle has-text-centered">
-            Scene Rubble: left is VastGaussian, right is BlockGaussian(ours)
-          </h2>
-        </div>
-
-      </div>
-    </div>
-  </div>
-</section>
-<!-- End image comparison carousel-->
-
-
-<!-- Video comparison carousel-->
-<section class="hero is-small">
-  <div class="hero-body">
-    <div class="container is-max-desktop">
-      <h2 class="title is-3 has-text-centered">Dynamic Comparison</h2>
-      <div id="results-carousel" class="carousel results-carousel">
-
-        <div class="item">
-          <div class="video-compare-container" id="materialsDiv2">
-            <video class="video" id="materials2" loop playsinline autoPlay muted src="./static/videos/rubble_comparison_label.mp4" onplay="resizeAndPlay(this)"></video>
-            <canvas height=0 class="videoMerge" id="materials2Merge" style="border-radius: 10px;"></canvas>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="video-compare-container" id="materialsDiv3">
-            <video class="video" id="materials3" loop playsinline autoPlay muted src="./static/videos/residence_comparison_label.mp4" onplay="resizeAndPlay(this)"></video>
-            <canvas height=0 class="videoMerge" id="materials3Merge" style="border-radius: 10px;"></canvas>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-</section>
-<!-- End video comparison carousel-->
-
-
-<!--BibTex citation -->
-<section class="section" id="BibTeX">
-  <div class="container is-max-desktop content">
-    <h2 class="title">BibTeX</h2>
-    <pre><code>@misc{wu2025blockgaussianefficientlargescalescene,
-      title={BlockGaussian: Efficient Large-Scale Scene Novel View Synthesis via Adaptive Block-Based Gaussian Splatting}, 
-      author={Yongchang Wu and Zipeng Qi and Zhenwei Shi and Zhengxia Zou},
-      year={2025},
-      eprint={2504.09048},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV},
-      url={https://arxiv.org/abs/2504.09048}, 
+  <section id="citation" class="section container">
+    <div class="citation-heading"><h2>BibTeX</h2><button id="copy-bibtex" class="button button-outline" type="button">Copy BibTeX</button></div>
+    <pre tabindex="0"><code id="bibtex">@article{wu2025blockgaussian,
+  title={Blockgaussian: Efficient large-scale scene novel view synthesis via adaptive block-based gaussian splatting},
+  author={Wu, Yongchang and Qi, Zipeng and Shi, Zhenwei and Zou, Zhengxia},
+  journal={arXiv preprint arXiv:2504.09048},
+  year={2025}
 }</code></pre>
-  </div>
-</section>
-<!--End BibTex citation -->
-
-
-<footer class="footer">
-  <div class="container">
-    <div class="columns is-centered">
-      <div class="column is-8">
-        <div class="content">
-          <p>
-            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
-            You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license"  href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
-            Commons Attribution-ShareAlike 4.0 International License</a>.
-          </p>
-
-        </div>
-      </div>
-    </div>
-  </div>
-</footer>
-
-
-<!-- <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('.video-compare-container').forEach(function (container, index) {
-      console.log("Index of the container:", index);
-      container.addEventListener('click', function () {
-        if (index === 0) {
-          this.classList.toggle('expand-right');
-        } else if (index === 2) {
-          this.classList.toggle('expand-left');
-        } else {
-          this.classList.toggle('expanded');
-        }
-      });
-    });
-  });
-</script> -->
-  
-<!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
-
-    <!-- End of Statcounter Code -->
-
+    <p id="copy-status" class="interaction-status" role="status" aria-live="polite"></p>
+  </section>
+</main>
+<footer class="footer"><div class="container"><p>This website builds on the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank" rel="noopener">Academic Project Page Template</a>, adapted from <a href="https://nerfies.github.io/" target="_blank" rel="noopener">Nerfies</a>. Please retain the attribution when reusing this page.</p><p>Website licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>.</p></div></footer>
+<dialog id="figure-dialog" aria-labelledby="figure-dialog-title">
+  <div class="dialog-toolbar"><p id="figure-dialog-title">Figure</p><div><button type="button" id="figure-zoom" class="button button-outline" aria-pressed="false">Actual size</button><a id="figure-original" class="button button-outline" target="_blank" rel="noopener">Open image</a><button type="button" id="figure-close" class="button button-dark">Close</button></div></div>
+  <div class="dialog-image-area"><img alt="" id="figure-dialog-image"></div>
+</dialog>
+<noscript><p class="noscript-note">Figures and tables are available without JavaScript. Enable JavaScript to select scenes, compare results interactively, and copy the citation.</p><style>[role="tabpanel"][hidden]{display:block!important}.scene-tabs,.video-controls{display:none!important}.b-dics{opacity:1;display:block}.b-dics img{display:block;width:100%}</style></noscript>
 </body>
 </html>

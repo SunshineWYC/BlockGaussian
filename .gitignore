@@ -1,0 +1,19 @@
+# Local preview logs, screenshots and inspection artifacts
+/.local-preview/
+
+# Private manuscript and source figures; only exported web assets are published
+/materials/
+
+# Python caches
+__pycache__/
+*.py[cod]
+
+# Editor temporary files
+*.swp
+*.swo
+*~
+
+# OS metadata
+.DS_Store
+Thumbs.db
+Desktop.ini

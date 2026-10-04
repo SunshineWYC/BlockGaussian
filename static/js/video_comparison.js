@@ -1,145 +1,173 @@
-// Written by Lukas Radl, April 2024
-// Adapted from the following sources
-// Ref-NeRF     https://dorverbin.github.io/refnerf/
-// Reconfusion  https://reconfusion.github.io/
-// DICS         https://github.com/abelcabezaroman/definitive-image-comparison-slider
-var position = 0.25
-var leftButtonDown = false
-var strokeColor = "#FFFFFFDD";
-
-var vidShow = 0;
-var currentSceneFLIP = 'modern';
-currentButtonFLIP = 'btn_flip0';
-
-function changeFLIP(flip_t) {
-    // flip_t
-    // 1 -> FLIP_1
-    // 7 -> FLIP_7
-    // 0 -> Video comparison
-
-    document.getElementById(currentButtonFLIP).classList.remove('button-17-selected');
-    document.getElementById(currentButtonFLIP).classList.add('button-17');
-
-    currentButtonFLIP = 'btn_flip' + flip_t;
-    document.getElementById(currentButtonFLIP).classList.remove('button-17');
-    document.getElementById(currentButtonFLIP).classList.add('button-17-selected');
-
-    if (flip_t == 1){
-        vidShow = 0;
+/* In-image video comparison, adapted from the original project-page code.
+ * Original: Lukas Radl (April 2024), based on Ref-NeRF, Reconfusion and DICS.
+ * Retains the original left-frame/right-crop compositing and pointer tracking.
+ * Each container owns its position and loop; hidden media never keeps drawing.
+ */
+"use strict";
+(() => {
+  class VideoComparison {
+    constructor(container) {
+      this.container = container;
+      this.video = container.querySelector("video");
+      this.canvas = container.querySelector("canvas");
+      this.context = this.canvas.getContext("2d");
+      this.button = container.querySelector(".play-comparison");
+      this.status = container.querySelector('[role="status"]');
+      this.position = 0.5;
+      this.raf = null;
+      this.inViewport = false;
+      this.manuallyPaused = false;
+      this.reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      this.lastTime = -1;
+      this.video.controls = false;
+      this.canvas.tabIndex = 0;
+      this.canvas.setAttribute("role", "slider");
+      this.canvas.setAttribute("aria-valuemin", "0");
+      this.canvas.setAttribute("aria-valuemax", "100");
+      this.button.setAttribute("aria-pressed", "false");
+      this.setPosition(0.5);
+      this.button.addEventListener("click", () => {
+        this.manuallyPaused = !this.video.paused;
+        if (this.video.paused) this.play();
+        else this.video.pause();
+      });
+      this.video.addEventListener("loadeddata", () => {
+        this.resize();
+        // Keep the decoding source in the DOM like the original implementation.
+        this.video.classList.add("video-source-loaded");
+        this.canvas.hidden = false;
+        this.container.classList.remove("is-loading");
+        this.draw();
+      });
+      this.video.addEventListener("play", () => {
+        this.button.textContent = "Pause comparison";
+        this.button.setAttribute("aria-pressed", "true");
+        this.status.textContent = "";
+        this.startLoop();
+      });
+      this.video.addEventListener("playing", () => {
+        this.container.classList.remove("is-loading");
+        this.startLoop();
+      });
+      this.video.addEventListener("pause", () => {
+        this.stopLoop();
+        this.button.textContent = "Play comparison";
+        this.button.setAttribute("aria-pressed", "false");
+        this.container.classList.remove("is-loading");
+      });
+      this.video.addEventListener("waiting", () => {
+        if (!this.video.paused) this.container.classList.add("is-loading");
+      });
+      this.video.addEventListener("seeked", () => this.draw());
+      this.video.addEventListener("error", () => {
+        this.video.pause();
+        this.stopLoop();
+        this.container.classList.remove("is-loading");
+        this.status.textContent = "This comparison could not be loaded. Reload the page to try again.";
+      });
+      this.canvas.addEventListener("pointermove", event => {
+        if (event.pointerType === "mouse" || event.buttons) this.pointer(event);
+      });
+      this.canvas.addEventListener("pointerdown", event => {
+        this.canvas.setPointerCapture(event.pointerId);
+        this.pointer(event);
+      });
+      this.canvas.addEventListener("keydown", event => {
+        let value = this.position;
+        if (event.key === "ArrowLeft") value -= 0.05;
+        else if (event.key === "ArrowRight") value += 0.05;
+        else if (event.key === "Home") value = 0;
+        else if (event.key === "End") value = 1;
+        else return;
+        event.preventDefault();
+        this.setPosition(value);
+      });
+      if ("IntersectionObserver" in window) {
+        this.observer = new IntersectionObserver(entries => {
+          this.inViewport = entries[0].isIntersecting;
+          if (!this.active()) this.pauseHidden();
+          else if (!this.manuallyPaused && !this.reducedMotion) this.play();
+        }, { threshold: 0.15 });
+        this.observer.observe(container);
+      } else this.inViewport = true;
+      document.addEventListener("scenechange", () => {
+        if (this.container.closest("[hidden]")) this.pauseHidden();
+      });
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden) this.pauseHidden();
+        else if (this.active() && !this.manuallyPaused && !this.reducedMotion) this.play();
+      });
     }
-    else if (flip_t == 7) {
-        vidShow = 1;
+    active() {
+      return this.inViewport && !document.hidden && !this.container.closest("[hidden]");
     }
-    else {
-        vidShow = 2;
+    pauseHidden() {
+      this.video.pause();
+      this.stopLoop();
     }
-}
-
-function playVids(videoId) {
-    var videoMerge = document.getElementById(videoId + "Merge");
-    var vid = document.getElementById(videoId);
-
-    var vidWidth = vid.videoWidth / 2;
-
-
-    var subVidHeight = vid.videoHeight;
-    var interm_pos = 0;
-
-    var mergeContext = videoMerge.getContext("2d");
-    
-    if (vid.readyState > 3) {
-        vid.play();
-
-        function trackLocation(e) {
-            // Normalize to [0, 1]
-            bcr = videoMerge.getBoundingClientRect();
-            position = ((e.pageX - bcr.x) / bcr.width);
-        }
-        function trackLocationTouch(e) {
-            // Normalize to [0, 1]
-            bcr = videoMerge.getBoundingClientRect();
-            position = ((e.touches[0].pageX - bcr.x) / bcr.width);
-        }
-
-        videoMerge.addEventListener("mousemove",  trackLocation, false); 
-        videoMerge.addEventListener("touchstart", trackLocationTouch, false);
-        videoMerge.addEventListener("touchmove",  trackLocationTouch, false);
-
-
-        function drawLoop() {
-            mergeContext.drawImage(vid, 0, vidShow * subVidHeight, vidWidth, subVidHeight, 0, 0, vidWidth, subVidHeight);
-            var colStart = (vidWidth * position).clamp(0.0, vidWidth);
-            var colWidth = (vidWidth - (vidWidth * position)).clamp(0.0, vidWidth);
-            mergeContext.drawImage(vid, colStart+vidWidth, vidShow * subVidHeight, colWidth, subVidHeight, colStart, 0, colWidth, subVidHeight);
-            requestAnimationFrame(drawLoop);
-
-            var currX = vidWidth * position;
-            
-            // Draw border
-            mergeContext.beginPath();
-            mergeContext.moveTo(vidWidth*position, 0);
-            mergeContext.lineTo(vidWidth*position, subVidHeight);
-            mergeContext.closePath()
-            mergeContext.strokeStyle = strokeColor;
-            mergeContext.lineWidth = 2;            
-            mergeContext.stroke();
-
-            var arrowPosY2 = subVidHeight / 2;
-            var arrowW = subVidHeight / 70;
-            var arrowL = subVidHeight / 150;
-            var arrowoffsetL = subVidHeight / 150;
-
-            // draw (similar to dics)
-            mergeContext.beginPath();
-            mergeContext.moveTo(currX + arrowL + arrowoffsetL, arrowPosY2 - arrowW/2);
-            mergeContext.lineTo(currX + 2*arrowL + arrowoffsetL, arrowPosY2 );
-            mergeContext.lineTo(currX + arrowL + arrowoffsetL, arrowPosY2 + arrowW/2);
-
-            mergeContext.strokeStyle = strokeColor;
-            mergeContext.stroke();
-
-            // draw (similar to dics)
-            mergeContext.beginPath();
-            mergeContext.moveTo(currX - arrowL - arrowoffsetL, arrowPosY2 - arrowW/2);
-            mergeContext.lineTo(currX - 2*arrowL - arrowoffsetL, arrowPosY2 );
-            mergeContext.lineTo(currX - arrowL - arrowoffsetL, arrowPosY2 + arrowW/2);
-
-            mergeContext.strokeStyle = strokeColor;
-            mergeContext.stroke();
-            
-        }
-        requestAnimationFrame(drawLoop);
-    } 
-}
-
-Number.prototype.clamp = function(min, max) {
-  return Math.min(Math.max(this, min), max);
-};
-
-function changeSceneFLIP(scene) {
-    var video = document.getElementById('flipvideo');
-    var new_src = 'video/' + scene.toLowerCase() + '_video_loop.mp4'
-
-    if (currentSceneFLIP == scene.toLowerCase()) {
-        return;
+    async play() {
+      if (!this.video.paused) return;
+      this.container.classList.add("is-loading");
+      try {
+        await this.video.play();
+        if (!this.active()) this.pauseHidden();
+      } catch (error) {
+        this.container.classList.remove("is-loading");
+        if (error.name !== "AbortError") this.status.textContent = "Press Play to start the comparison.";
+      }
     }
-    document.getElementById('btn_' + currentSceneFLIP + '_flip').classList.remove('button-17-selected');
-    document.getElementById('btn_' + currentSceneFLIP + '_flip').classList.add('button-17');
-
-    currentSceneFLIP = scene.toLowerCase();
-
-    document.getElementById('btn_' + currentSceneFLIP + '_flip').classList.remove('button-17');
-    document.getElementById('btn_' + currentSceneFLIP + '_flip').classList.add('button-17-selected');
-    video.src = new_src;
-}
-    
-function resizeAndPlay(element)
-{
-  var cv = document.getElementById(element.id + "Merge");
-  cv.width = element.videoWidth / 2;
-  cv.height = element.videoHeight;
-  element.play();
-  element.style.height = "0px";  // Hide video without stopping it
-
-  playVids(element.id);
-}
+    resize() {
+      const width = this.video.videoWidth / 2, height = this.video.videoHeight;
+      if (width && height && (this.canvas.width !== width || this.canvas.height !== height)) {
+        this.canvas.width = width;
+        this.canvas.height = height;
+      }
+    }
+    setPosition(value) {
+      this.position = Math.max(0, Math.min(1, value));
+      this.canvas.setAttribute("aria-valuenow", String(Math.round(this.position * 100)));
+      this.canvas.setAttribute("aria-valuetext", Math.round(this.position * 100) + "% comparison method");
+      this.draw();
+    }
+    pointer(event) {
+      const bounds = this.canvas.getBoundingClientRect();
+      if (bounds.width) this.setPosition((event.clientX - bounds.left) / bounds.width);
+    }
+    draw() {
+      if (this.video.readyState < 2 || !this.video.videoWidth) return;
+      this.resize();
+      const w = this.canvas.width, h = this.canvas.height, x = w * this.position;
+      const ctx = this.context, rightWidth = w - x;
+      // Original compositing: one full left frame, then the matching right crop.
+      ctx.drawImage(this.video, 0, 0, w, h, 0, 0, w, h);
+      if (rightWidth > 0) ctx.drawImage(this.video, x + w, 0, rightWidth, h, x, 0, rightWidth, h);
+      ctx.strokeStyle = "rgba(255,255,255,.95)";
+      ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
+      const y = h / 2, arrowWidth = h / 70, arrowLength = h / 150, offset = h / 150;
+      for (const direction of [-1, 1]) {
+        ctx.beginPath();
+        ctx.moveTo(x + direction * (arrowLength + offset), y - arrowWidth / 2);
+        ctx.lineTo(x + direction * (2 * arrowLength + offset), y);
+        ctx.lineTo(x + direction * (arrowLength + offset), y + arrowWidth / 2);
+        ctx.stroke();
+      }
+      this.lastTime = this.video.currentTime;
+    }
+    startLoop() {
+      this.stopLoop();
+      const tick = () => {
+        this.raf = null;
+        if (this.video.paused || !this.active()) return;
+        if (this.video.currentTime !== this.lastTime) this.draw();
+        this.raf = requestAnimationFrame(tick);
+      };
+      tick();
+    }
+    stopLoop() {
+      if (this.raf !== null) cancelAnimationFrame(this.raf);
+      this.raf = null;
+    }
+  }
+  document.querySelectorAll("[data-video-comparison]").forEach(container => new VideoComparison(container));
+})();
