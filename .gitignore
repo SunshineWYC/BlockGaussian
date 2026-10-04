@@ -4,6 +4,26 @@
 # Private manuscript and source figures; only exported web assets are published
 /materials/
 
+# Local tooling and editor settings
+/.codex/
+/.vscode/
+/.idea/
+
+# Unused generated exports kept locally; remove the matching rule if reused
+/static/images/updated/overview-small.png
+/static/images/updated/reconstruction-time.svg
+/static/images/updated/result_airspace-small.webp
+/static/images/updated/result_airspace.webp
+/static/images/updated/table-ii-small.png
+/static/images/updated/table-ii.png
+/static/images/updated/table-v-small.png
+/static/images/updated/table-v.png
+/static/images/updated/teaser-scene-small.webp
+/static/images/updated/training-full-small.png
+/static/images/updated/training-full.png
+/static/images/updated/training-resources-small.png
+/static/images/updated/training-resources.png
+
 # Python caches
 __pycache__/
 *.py[cod]

@@ -110,7 +110,7 @@ Abstract、Method、Results、Efficiency、Demos、Limitations、BibTeX 及页�
 
 截图脚本按检查过的页面坐标裁剪；最长页边渲染为 6800px，保留高分辨率 PNG，正文加载最长边不超过 2200px 的预览。图 10 下半部分截图只包含位置和对数尺度梯度，不混入上半部分数量／显存图。
 
-历史导出文件可能保留在 updated/ 中，但网页只加载 index.html 实际引用的素材。reconstruction-time.svg、training-resources.png、table-ii.png、table-v.png、training-full.png、result_airspace.webp 及其预览版本不再用于当前页面。移除展示不删除原始材料。原 HTML 表格生成器已移除；benchmarks.json 保留用于核对数值和计算口径。
+历史导出文件保留在 updated/ 中，但网页只加载 index.html 实际引用的素材。当前未使用的 13 个导出文件已在 .gitignore 中逐项排除，包括旧统计图、未展示的表格及多余预览图；它们不会随普通 git add 加入提交。以后重新采用某张图时，先移除对应忽略规则，再更新网页引用并检查展示。materials/、.local-preview/ 及本机工具／编辑器设置目录同样被排除。移除展示不删除原始材料。原 HTML 表格生成器已移除；benchmarks.json 保留用于核对数值和计算口径。
 
 ## 数值口径与源文件冲突
 
